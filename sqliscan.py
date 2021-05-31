@@ -3,6 +3,16 @@ from urllib import parse
 import requests
 import sys
 
+def usage():
+        print("Example: ")
+        print("python3 sqliscan.py <target_url> \"<cookie>\" \"<user-agent>\" ")
+        print("\n")
+        print("<target_url> = http://alvo?parametro_para_teste=1")
+        print("<cookie> = \"PHPSESSID=98elkn24bcjrdgn7due0up7pb4\" ")
+        print("<user-agent> = \"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36\" ")
+        print("\n")
+        sys.exit(1)
+
 # Função para fazer a requisição
 def requests_for(url):
         headers = {
@@ -22,8 +32,12 @@ def is_vulnerable(html):
         if "You have an error in your SQL syntax" in html:
                 return True
 
-# Recebe a URL via linha de comando
-url = sys.argv[1];
+# Recebe a URL via linha de comando;
+if sys.argv[1] == "--help":
+        usage()
+else: 
+        url = sys.argv[1]
+
 cookie = sys.argv[2]
 useragent = sys.argv[3]
 
